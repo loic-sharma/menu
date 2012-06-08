@@ -4,11 +4,42 @@ use Menu;
 
 class Item {
 
+	/**
+	 * The name of the item.
+	 *
+	 * @var string
+	 */
 	public $name;
+
+	/**
+	 * The URL of the item.
+	 *
+	 * @var string
+	 */
 	public $url;
-	public $items;
+
+	/**
+	 * The subitems of this item.
+	 *
+	 * @var array
+	 */
+	public $items = array();
+
+	/**
+	 * The attributes of the item.
+	 *
+	 * @var array
+	 */
 	public $attributes = array();
 
+	/**
+	 * Create a new item.
+	 *
+	 * @param  string  $name
+	 * @param  string  $url
+	 * @param  array   $sub_items
+	 * @return Item
+	 */
 	public static function create($name, $url = null, $sub_items = null)
 	{
 		$item = new static;
@@ -33,6 +64,14 @@ class Item {
 		return $item;
 	}
 
+	/**
+	 * Add a new subitem to the current item.
+	 *
+	 * @param  string  $name
+	 * @param  string  $url
+	 * @param  array   $sub_items
+	 * @return Item
+	 */
 	public function add($name, $url = null, $sub_items = null)
 	{
 		$item = Item::create($name, $url, $sub_items);
@@ -45,11 +84,17 @@ class Item {
 		return $this;
 	}
 
+	/**
+	 * Add attributes to the last added item.
+	 *
+	 * @param  array
+	 * @return Item
+	 */
 	public function attributes($attributes)
 	{
 		$item = end($this->items);
 
-		$item->attributes = $attributes;
+		$item->attributes = array_merge($this->attributes, $attributes);
 
 		return $this;
 	}
