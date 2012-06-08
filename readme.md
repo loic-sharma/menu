@@ -60,7 +60,7 @@ Menu::add_filter(function($item)
 });
 ```
 
-### Adding attributes to a Menu Item
+### Adding attributes to a Menu Items
 ```php
 <?php
 
@@ -70,7 +70,7 @@ $menu->add('Some link')->attibutes(array('style' => 'color: blue;'));
 
 ```
 
-### Displaying a menu
+### Displaying a Menu
 
 ```php
 <?php
