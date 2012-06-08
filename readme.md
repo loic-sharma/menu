@@ -4,7 +4,7 @@ Create an HTML menu easily!
 
 ## A Few Examples
 
-### Sending a message:
+### Creating a new Menu
 
 ```php
 <?php
