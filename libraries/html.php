@@ -47,7 +47,7 @@ class HTML extends \Laravel\HTML {
 				$menu_item = static::entities($item->name);
 			}
 
-			if( ! is_null($item->items))
+			if( ! empty($item->items))
 			{
 				$menu_item .= static::menu($item->items, $attributes);
 			}
