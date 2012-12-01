@@ -1,0 +1,18 @@
+{
+    "name": "loic-sharma/menu",
+    "description": "A simple menu package.",
+    "keywords": ["menu"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Loic Sharma",
+            "email": "sharma.loic@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Menu": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
