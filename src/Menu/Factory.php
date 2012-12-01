@@ -3,6 +3,7 @@
 namespace Menu;
 
 use Closure;
+use Menu\Items\Collection as ItemCollection;
 
 class Factory {
 
@@ -50,7 +51,7 @@ class Factory {
 	{
 		if( ! isset($this->menus[$name]))
 		{
-			$this->menus[$name] = new Items\Collection($name, $this->filters, $this->renderer);
+			$this->menus[$name] = new ItemCollection($name, $this->filters, $this->renderer);
 		}
 
 		return $this->menus[$name];
