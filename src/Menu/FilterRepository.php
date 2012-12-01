@@ -7,10 +7,27 @@ use Menu\Items\Item as MenuItem;
 
 class FilterRepository {
 
+	/**
+	 * The registered item filters.
+	 *
+	 * @var array
+	 */
 	protected $filters = array();
 
+	/**
+	 * The registered filters that only apply to specific menus.
+	 *
+	 * @var array
+	 */
 	protected $menuFilter = array();
 
+	/**
+	 * Register a new filter.
+	 *
+	 * @param  Closure  $filter
+	 * @param  string   $menu
+	 * @return void
+	 */
 	public function addFilter(Closure $filter, $menu = null)
 	{
 		if(is_null($menu))
@@ -24,6 +41,13 @@ class FilterRepository {
 		}
 	}
 
+	/**
+	 * Execute the filters on an item.
+	 *
+	 * @param  Menu\Items\Item $item
+	 * @param  string          $menu
+	 * @return bool
+	 */
 	public function filter(MenuItem $item, $menu = null)
 	{
 		$filters = $this->filters;
@@ -40,5 +64,7 @@ class FilterRepository {
 				return true;
 			}
 		}
+
+		return false;
 	}
 }

@@ -1,6 +1,6 @@
 {
     "name": "loic-sharma/menu",
-    "description": "A simple menu package.",
+    "description": "An expressive HTML Generator to create menus.",
     "keywords": ["menu"],
     "license": "MIT",
     "authors": [
