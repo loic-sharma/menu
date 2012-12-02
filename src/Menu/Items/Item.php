@@ -267,7 +267,15 @@ abstract class Item implements ArrayAccess {
 			}
 		}
 
-		$this->attributes[$element][$offset] = $value;
+		if( ! is_null($offset))
+		{
+			$this->attributes[$element][$offset] = $value;
+		}
+
+		else
+		{
+			$this->attributes[$element] = $value;
+		}
 	}
 
 	/**
