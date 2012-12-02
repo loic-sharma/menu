@@ -136,6 +136,31 @@ abstract class Item implements ArrayAccess {
 	}
 
 	/**
+	 * Fetch a specific item.
+	 *
+	 * @param  string|Closure  $item
+	 * @return Menu\Item
+	 */
+	public function get($filter)
+	{
+		foreach($this->items as $item)
+		{
+			if(is_string($filter) and $item->name == $filter)
+			{
+				return $item;
+			}
+
+			if($filter instanceof Closure and $filter($item) == true)
+			{
+				return $item;
+			}
+		}
+
+		// Todo: throw an exception?
+		return null;
+	}
+
+	/**
 	 * Fetch all of the item's sub-items.
 	 *
 	 * @return array
