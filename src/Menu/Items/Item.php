@@ -154,9 +154,13 @@ abstract class Item implements ArrayAccess {
 			{
 				return $item;
 			}
+
+			if( ! is_null($item->get($filter)))
+			{
+				return $item;
+			}
 		}
 
-		// Todo: throw an exception?
 		return null;
 	}
 
