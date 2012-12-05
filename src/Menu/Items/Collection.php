@@ -14,14 +14,4 @@ class Collection extends Item {
 	{
 		$this->filters->addFilter($filter, $this->menuName);
 	}
-
-	/**
-	 * Render the current menu.
-	 *
-	 * @return string
-	 */
-	public function render()
-	{
-		return $this->renderer->renderMenu($this);
-	}
 }

@@ -7,7 +7,7 @@ use ArrayAccess;
 use Menu\FilterRepository as MenuFilters;
 use Menu\Renderer as MenuRenderer;
 
-abstract class Item implements ArrayAccess {
+class Item implements ArrayAccess {
 
 	/**
 	 * The name of the item.
@@ -105,7 +105,7 @@ abstract class Item implements ArrayAccess {
 	 */
 	public function add($name, $attributes = null, $subItems = null)
 	{
-		$item = new MenuItem($this->menuName, $this->filters, $this->renderer);
+		$item = new Item($this->menuName, $this->filters, $this->renderer);
 
 		$item->name = $name;
 
@@ -292,11 +292,14 @@ abstract class Item implements ArrayAccess {
 	}
 
 	/**
-	 * Render the current item.
+	 * Render the current menu.
 	 *
 	 * @return string
 	 */
-	abstract function render();
+	public function render()
+	{
+		return $this->renderer->renderMenu($this);
+	}
 
 	/**
 	 * Render the current item.
