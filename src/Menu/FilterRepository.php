@@ -42,6 +42,26 @@ class FilterRepository {
 	}
 
 	/**
+	 * Get all of the matching filters. If a menu name is given,
+	 * fetch the filters that match that menu as well.
+	 *
+	 * @param  string  $menu
+	 * @return array
+	 */
+	public function getFilters($menu = null)
+	{
+		$filters = $this->filters;
+
+		// Add the menu-specific filters if we are given a menu name.
+		if( ! is_null($menu))
+		{
+			$filters = array_merge($filters, $this->menuFilters[$menu]);
+		}
+
+		return $filters;
+	}
+
+	/**
 	 * Execute the filters on an item.
 	 *
 	 * @param  Menu\Items\Item $item
@@ -50,15 +70,10 @@ class FilterRepository {
 	 */
 	public function filter(MenuItem $item, $menu = null)
 	{
-		$filters = $this->filters;
-
-		if( ! is_null($menu))
+		// Run the item through each matching filter.
+		foreach($this->getFilters($menu) as $filter)
 		{
-			$filters = array_merge($filters, $this->menuFilters[$menu]);
-		}
-
-		foreach($filters as $filter)
-		{
+			// We're done if the filter returns true.
 			if($filter($item) == true)
 			{
 				return true;
