@@ -1,6 +1,4 @@
-<?php
-
-namespace Menu\Items;
+<?php namespace Menu\Items;
 
 use Closure;
 use ArrayAccess;

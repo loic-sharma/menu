@@ -1,6 +1,4 @@
-<?php
-
-namespace menu;
+<?php namespace menu;
 
 class Renderer {
 

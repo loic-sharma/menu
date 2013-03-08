@@ -1,6 +1,4 @@
-<?php
-
-namespace Menu;
+<?php namespace Menu;
 
 use Closure;
 use Menu\Items\Item as MenuItem;
