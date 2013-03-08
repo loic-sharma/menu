@@ -17,7 +17,7 @@ class FilterRepository {
 	 *
 	 * @var array
 	 */
-	protected $menuFilter = array();
+	protected $menuFilters = array();
 
 	/**
 	 * Register a new filter.
@@ -35,7 +35,7 @@ class FilterRepository {
 
 		else
 		{
-			$this->menuFilter[$menu] = $filter;
+			$this->menuFilters[$menu][] = $filter;
 		}
 	}
 
