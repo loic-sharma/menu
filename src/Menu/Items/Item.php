@@ -183,8 +183,16 @@ class Item implements ArrayAccess {
 		return $items;
 	}
 
+	/**
+	 * Find the internal key that matches the given offset.
+	 *
+	 * @param  string  $offset
+	 * @return string
+	 */
 	protected function parseOffset($offset)
 	{
+		// The url offset can be used as a shortcut for the href attribute
+		// to an anchor tag.
 		if($offset == 'url')
 		{
 			return array('a', 'href');
@@ -202,6 +210,8 @@ class Item implements ArrayAccess {
 				return array($element, substr($offset, strlen($element)+1));
 			}
 		}
+
+		return $offset;
 	}
 
 	/**
