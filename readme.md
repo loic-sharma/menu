@@ -33,11 +33,23 @@ echo $menu;
 
 $menu->add('Name', function($item)
 {
-	$item['url'] = '/uri';
+	$item->url = '/uri';
 
-	$item['li.id']    = 'name-id';
-	$item['li.class'] = 'name-class';
-	$item['a.class']  = 'another-class';
+	$item->attribute('li.id', 'name-id');
+	$item->attribute('li.class', 'name-class');
+	$item->attribute('a.class', 'another-class');
+
+	// Or:
+	$item->element('li')->attribute('id', 'name-id');
+	$item->element('li')->attribute('class', 'name-class');
+
+	// Or:
+
+	$item->element('li', function($element)
+	{
+		$element->id = 'name-id';
+		$element->class = 'name-class';
+	});
 });
 
 ```
@@ -52,7 +64,7 @@ Filters can be used to either remove an item from a menu, or to add more attribu
 // Filter all the menus.
 $factory->filter(function($item)
 {
-	if($item->name = 'Admin' or $item['url'] == '/admin')
+	if($item->name == 'Admin' or $item->url == '/admin')
 	{
 		// Returning true will remove the item from the menu.
 		return true;
@@ -63,7 +75,7 @@ $factory->filter(function($item)
 $menu->filter(function($item)
 {
 	// Modify the li elements.
-	$item['li.class'] = 'prettify';
+	$item->attribute('li.class', 'prettify');
 });
 
 ```

@@ -1,11 +1,10 @@
 <?php namespace Menu\Items;
 
 use Closure;
-use ArrayAccess;
 use Menu\FilterRepository as MenuFilters;
 use Menu\Renderer as MenuRenderer;
 
-class Item implements ArrayAccess {
+class Item extends Element {
 
 	/**
 	 * The name of the item.
@@ -22,6 +21,13 @@ class Item implements ArrayAccess {
 	public $menuName;
 
 	/**
+	 * The URL of the item.
+	 *
+	 * @var string
+	 */
+	public $url;
+
+	/**
 	 * The instance of the Filter Repository.
 	 *
 	 * @var Menu\FilterRepository
@@ -36,15 +42,11 @@ class Item implements ArrayAccess {
 	protected $renderer;
 
 	/**
-	 * The list of attributes for this item.
+	 * The item's elements.
 	 *
 	 * @var array
 	 */
-	protected $attributes = array(
-		'ul' => array(),
-		'li' => array(),
-		'a'  => array(),
-	);
+	protected $elements = array();
 
 	/**
 	 * The list of items that belong to this item.
@@ -183,122 +185,34 @@ class Item implements ArrayAccess {
 		return $items;
 	}
 
-	/**
-	 * Find the internal key that matches the given offset.
-	 *
-	 * @param  string  $offset
-	 * @return string
-	 */
-	protected function parseOffset($offset)
+	public function element($name, Closure $closure = null)
 	{
-		// The url offset can be used as a shortcut for the href attribute
-		// to an anchor tag.
-		if($offset == 'url')
+		if( ! isset($this->elements[$name]))
 		{
-			return array('a', 'href');
+			$this->elements[$name] = new Element;
 		}
 
-		foreach(array('ul', 'li', 'a') as $element)
+		// Run the element through the closure if one was passed.
+		if( ! is_null($closure))
 		{
-			if($offset == $element)
-			{
-				return array($offset, null);
-			}
-
-			if(strpos($offset, $element.'.') === 0)
-			{
-				return array($element, substr($offset, strlen($element)+1));
-			}
+			$closure($this->elements[$name]);
 		}
 
-		return $offset;
+		return $this->elements[$name];
 	}
 
-	/**
-	 * Determine if a given offset exists.
-	 *
-	 * @param  string  $key
-	 * @return bool
-	 */
-	public function offsetExists($offset)
+	public function attribute($attribute, $value = null)
 	{
-		list($element, $offset) = $this->parseOffset($offset);
+		list($element, $attribute) = explode('.', $attribute);
 
-		if( ! is_null($offset))
+		$element = $this->element($element);
+
+		if( ! is_null($value) or ! $element->has($attribute))
 		{
-			return isset($this->attributes[$element][$offset]);
+			$element->attribute($attribute, $value);
 		}
 
-		else
-		{
-			return isset($this->attributes[$element]);
-		}
-	}
-
-	/**
-	 * Get the value at a given offset.
-	 *
-	 * @param  string  $key
-	 * @return mixed
-	 */
-	public function offsetGet($offset)
-	{
-		list($element, $offset) = $this->parseOffset($offset);
-
-		if( ! is_null($offset))
-		{
-			return $this->attributes[$element][$offset];
-		}
-
-		else
-		{
-			return $this->attributes[$element];
-		}
-	}
-
-	/**
-	 * Set the value at a given offset.
-	 *
-	 * @param  string  $key
-	 * @param  mixed   $value
-	 * @return void
-	 */	
-	public function offsetSet($offset, $value)
-	{
-		list($element, $offset) = $this->parseOffset($offset);
-
-		if( ! is_null($offset))
-		{
-			// The id and class elements should append to the value so that
-			// multiple ids and classes can be added.
-			if($offset == 'id' or $offset == 'class')
-			{
-				if(isset($this->attributes[$element][$offset]))
-				{
-					$value = $this->attributes[$element][$offset].' '.$value;
-				}
-			}
-
-			$this->attributes[$element][$offset] = $value;
-		}
-
-		else
-		{
-			$this->attributes[$element] = $value;
-		}
-	}
-
-	/**
-	 * Unset the value at a given offset.
-	 *
-	 * @param  string  $key
-	 * @return void
-	 */
-	public function offsetUnset($offset)
-	{
-		list($element, $offset) = $this->parseOffset($offset);
-
-		unset($this->attributes[$element][$offset]);
+		return $element->attribute($attribute);
 	}
 
 	/**

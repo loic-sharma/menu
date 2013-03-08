@@ -1,5 +1,7 @@
 <?php namespace menu;
 
+use Menu\Items\Element;
+
 class Renderer {
 
 	/**
@@ -7,20 +9,29 @@ class Renderer {
 	 *
 	 * @var array
 	 */
-	public $options = array();
+	public $options = array(
+		'class.first' => 'first',
+		'class.last' => 'last',
+		'class.single' => 'single',
+	);
 
 	/**
-	 * Set the default renderer options.
+	 * Convert a menu item into HTML.
 	 *
-	 * @return void
+	 * @param  mixed  $item
+	 * @return string
 	 */
-	public function __construct()
+	public function render($item)
 	{
-		$this->options = array(
-			'class.first'   => 'first',
-			'class.last'    => 'last',
-			'class.single'  => 'single',
-		);
+		if($item instanceof Menu\Items\Collection)
+		{
+			$this->renderMenu($item);
+		}
+
+		if($item instanceof Menu\Items\Item)
+		{
+			$this->renderItem($item);
+		}
 	}
 
 	/**
@@ -33,6 +44,7 @@ class Renderer {
 	{
 		$output = '';
 
+		$options = $this->options;
 		$items = $menu->items();
 		$last = count($items)-1;
 
@@ -40,12 +52,18 @@ class Renderer {
 		{
 			if($key == 0)
 			{
-				$item['li.class'] = $this->options['class.first'];
+				$item->element('li', function($element) use($options)
+				{
+					$element->append('class', $options['class.first']);
+				});
 			}
 
 			elseif($key == $last)
 			{
-				$item['li.class'] = $this->options['class.last'];
+				$item->element('li', function($element) use($options)
+				{
+					$element->append('class', $options['class.last']);
+				});
 			}
 
 			$output .= $this->renderItem($item, 1);
@@ -63,11 +81,16 @@ class Renderer {
 	 */
 	public function renderItem($item, $depth = 1)
 	{
-		$output = $this->format('<li'.$this->attributes($item['li']).'>', $depth);
+		$output = $this->format('<li'.$this->attributes($item->element('li')).'>', $depth);
 
-		if( ! empty($item['a']))
+		if( ! empty($item->url))
 		{
-			$link = '<a'.$this->attributes($item['a']).'>'.$item->name.'</a>';
+			$item->element('a')->attribute('href', $item->url);
+		}
+
+		if(count($item->element('a')->attributes()) != 0)
+		{
+			$link = '<a'.$this->attributes($item->element('a')).'>'.$item->name.'</a>';
 
 			$output .= $this->format($link, $depth+1);
 		}
@@ -106,7 +129,7 @@ class Renderer {
 			{
 				if($itemCount == 1)
 				{
-					$item['li.class'] = $this->options['class.single'];
+					$item->attribute('li.class', $this->options['class.single']);
 				}
 
 				$output .= $this->renderItem($item, $depth+1);
@@ -131,16 +154,16 @@ class Renderer {
 	}
 
 	/**
-	 * Generate the attributes to an item.
+	 * Generate the attributes of an element.
 	 *
-	 * @param  array   $item
+	 * @param  Menu\Items\Element  $item
 	 * @return string
 	 */
-	protected function attributes(array $attributes)
+	protected function attributes(Element $element)
 	{
 		$output = '';
 
-		foreach($attributes as $attribute => $value)
+		foreach($element->attributes() as $attribute => $value)
 		{
 			$output .= ' '.$attribute.'="'.$value.'"';
 		}
