@@ -257,7 +257,9 @@ class Item implements ArrayAccess {
 	{
 		list($element, $offset) = $this->parseOffset($offset);
 
-		if($offset == 'id' || $offset == 'class')
+		// The id and class elements should append the values so that
+		// multiple ids and classes can be added.
+		if($offset == 'id' or $offset == 'class')
 		{
 			if(isset($this->attributes[$element][$offset]))
 			{
