@@ -185,6 +185,13 @@ class Item extends Element {
 		return $items;
 	}
 
+	/**
+	 * Fetch an item's element.
+	 *
+	 * @param  string   $name
+	 * @param  Closure  $closure
+	 * @return Menu\Items\Element
+	 */
 	public function element($name, Closure $closure = null)
 	{
 		if( ! isset($this->elements[$name]))
@@ -201,6 +208,13 @@ class Item extends Element {
 		return $this->elements[$name];
 	}
 
+	/**
+	 * Fetch an attribute from one of the item's elements.
+	 *
+	 * @param  string  $attribute
+	 * @param  string  $value
+	 * @return string
+	 */
 	public function attribute($attribute, $value = null)
 	{
 		list($element, $attribute) = explode('.', $attribute);
