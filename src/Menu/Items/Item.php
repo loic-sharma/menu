@@ -136,6 +136,27 @@ class Item extends Element {
 	}
 
 	/**
+	 * Remove the current item, or remove a sub-item.
+	 *
+	 * @param  string  $item
+	 * @return void
+	 */
+	public function remove($name = null)
+	{
+		// Remove the current item if no name was inputted,.
+		if(is_null($name))
+		{
+			$this->parent->remove($name);
+		}
+
+		// Otherwise, remove a sub-item.
+		else
+		{
+			unset($this->items[$name]);
+		}
+	}
+
+	/**
 	 * Fetch a specific item.
 	 *
 	 * @param  string|Closure  $item
