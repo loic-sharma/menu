@@ -64,20 +64,21 @@ class FilterRepository {
 	 *
 	 * @param  Menu\Items\Item $item
 	 * @param  string          $menu
-	 * @return bool
+	 * @return void
 	 */
 	public function filter(MenuItem $item, $menu = null)
 	{
 		// Run the item through each matching filter.
 		foreach($this->getFilters($menu) as $filter)
 		{
-			// We're done if the filter returns true.
-			if($filter($item) == true)
+			$filter($item);
+
+			// Filters can be used to delete items. Lets make sure that the item
+			// still exists before filtering the item again.
+			if( ! $item->exists())
 			{
-				return true;
+				return;
 			}
 		}
-
-		return false;
 	}
 }

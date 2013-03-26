@@ -64,10 +64,10 @@ Filters can be used to either remove an item from a menu, or to add more attribu
 // Filter all the menus.
 $factory->filter(function($item)
 {
-	if($item->name == 'Admin' or $item->url == '/admin')
+	// Remove any items that have the name 'Admin'
+	if($item->name == 'Admin')
 	{
-		// Returning true will remove the item from the menu.
-		return true;
+		$item->remove();
 	}
 });
 
