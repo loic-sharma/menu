@@ -21,6 +21,20 @@ class Item extends Element {
 	public $hasBeenRemoved = false;
 
 	/**
+	 * The current item's menu.
+	 *
+	 * @var Menu\Item
+	 */
+	public $menu;
+
+	/**
+	 * The current item's parent.
+	 *
+	 * @var Menu\Item
+	 */
+	public $parent;
+
+	/**
 	 * The name of the menu the item belongs to.
 	 *
 	 * @var string
@@ -75,6 +89,28 @@ class Item extends Element {
 		$this->menuName = $menuName;
 		$this->filters = $filters;
 		$this->renderer = $renderer;
+	}
+
+	/**
+	 * Set the current item's menu.
+	 *
+	 * @param  Menu\Item  $menu
+	 * @return void
+	 */
+	public function setMenu(Item $menu)
+	{
+		$this->menu = $menu;
+	}
+
+	/**
+	 * Set the current item's parent.
+	 *
+	 * @param  Menu\Item  $menu
+	 * @return void
+	 */
+	public function setParent($parent)
+	{
+		$this->parent = $parent;
 	}
 
 	/**
@@ -136,6 +172,9 @@ class Item extends Element {
 		$item = new Item($this->menuName, $this->filters, $this->renderer);
 
 		$item->name = $name;
+
+		$item->setMenu($this->menu);
+		$item->setParent($this);
 
 		if( ! is_null($attributes))
 		{
