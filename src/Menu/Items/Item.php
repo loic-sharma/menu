@@ -14,6 +14,13 @@ class Item extends Element {
 	public $name;
 
 	/**
+	 * Wether the current item has been removed.
+	 *
+	 * @var bool
+	 */
+	public $hasBeenRemoved = false;
+
+	/**
 	 * The name of the menu the item belongs to.
 	 *
 	 * @var string
@@ -96,6 +103,27 @@ class Item extends Element {
 	}
 
 	/**
+	 * Verify that the current item exists.
+	 *
+	 * @return bool
+	 */
+	public function exists()
+	{
+		return $this->hasBeenRemoved;
+	}
+
+	/**
+	 * Verify that the current item has a subitem.
+	 *
+	 * @param  string  $name
+	 * @return bool
+	 */
+	public function has($name)
+	{
+		return (isset($this->items[$name]));
+	}
+
+	/**
 	 * Add a new sub-item to the current item.
 	 *
 	 * @param  string          $name
@@ -143,15 +171,19 @@ class Item extends Element {
 	 */
 	public function remove($name = null)
 	{
-		// Remove the current item if no name was inputted,.
+		// Remove the current item if no name was inputted.
 		if(is_null($name))
 		{
 			$this->parent->remove($name);
+
+			$this->hasBeenRemoved = true;
 		}
 
 		// Otherwise, remove a sub-item.
 		else
 		{
+			$this->items[$name]->hasBeenRemoved = true;
+
 			unset($this->items[$name]);
 		}
 	}

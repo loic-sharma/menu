@@ -35,8 +35,13 @@ class ItemTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(3, $item->items());
 
-		$item->get('bar')->remove();
+		$subItem = $item->get('bar');
 
+		$this->assertTrue($subItem->exists());
+
+		$subItem->remove();
+
+		$this->assertFalse($subItem->exists());
 		$this->assertEquals(2, $item->items());
 	}
 
@@ -53,6 +58,7 @@ class ItemTest extends PHPUnit_Framework_TestCase {
 		$item->remove('bar');
 
 		$this->assertEquals(2, $item->items());
+		$this->assertFalse($item->has('bar'));
 	}
 
 	protected function getItem()
