@@ -1,7 +1,7 @@
 <?php namespace Menu;
 
 use Closure;
-use Menu\Items\Collection as ItemCollection;
+use Menu\Items\Collection;
 
 class Factory {
 
@@ -49,7 +49,7 @@ class Factory {
 	{
 		if( ! isset($this->menus[$name]))
 		{
-			$this->menus[$name] = new ItemCollection($name, $this->filters, $this->renderer);
+			$this->menus[$name] = new Collection($name, $this->filters, $this->renderer);
 		}
 
 		return $this->menus[$name];
