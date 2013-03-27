@@ -85,6 +85,7 @@ class Item extends Element {
 	 * @return void
 	 */
 	public function __construct($menuName, MenuFilters $filters, MenuRenderer $renderer)
+	public function __construct(FilterRepository $filters, Renderer $renderer)
 	{
 		$this->menuName = $menuName;
 		$this->filters = $filters;
