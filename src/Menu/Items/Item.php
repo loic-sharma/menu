@@ -105,7 +105,7 @@ class Item extends Element {
 	/**
 	 * Set the current item's parent.
 	 *
-	 * @param  Menu\Item  $menu
+	 * @param  Menu\Item  $parent
 	 * @return void
 	 */
 	public function setParent($parent)
