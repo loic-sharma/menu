@@ -173,7 +173,11 @@ class Item extends Element {
 
 		$item->name = $name;
 
-		$item->setMenu($this->menu);
+		if( ! is_null($this->menu))
+		{
+			$item->setMenu($this->menu);
+		}
+
 		$item->setParent($this);
 
 		if( ! is_null($attributes))
