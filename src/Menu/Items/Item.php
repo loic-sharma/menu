@@ -217,7 +217,11 @@ class Item extends Element {
 		// Remove the current item if no name was inputted.
 		if(is_null($name))
 		{
-			$this->parent->remove($name);
+			// Remove the item from its parent, if it has one.
+			if( ! is_null($this->parent))
+			{
+				$this->parent->remove($this->name);
+			}
 
 			$this->hasBeenRemoved = true;
 		}
@@ -267,18 +271,12 @@ class Item extends Element {
 	 */
 	public function items()
 	{
-		$items = array();
-
 		foreach($this->items as $item)
 		{
-			if($this->filters->filter($item) != true)
-			{
-				$items[] = $item;
-			}
-
+			$this->filters->filter($item);
 		}
 
-		return $items;
+		return $this->items;
 	}
 
 	/**
