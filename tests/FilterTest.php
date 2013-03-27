@@ -20,17 +20,22 @@ class FilterTest extends PHPUnit_Framework_TestCase {
 		$renderer = new Menu\Renderer;
 		$item = new Menu\Items\Item('foo', $filters, $renderer);
 
-		$filters->addFilter(function($item)
-		{
-			return false;
-		});
+		$filters->addFilter(function($item) {});
 
 		$filters->addFilter(function($item)
 		{
-			return true;
+			$item->remove();
+
 		}, 'bar');
 
-		$this->assertFalse($filters->filter($item));
-		$this->assertTrue($filters->filter($item, 'bar'));
+		$this->assertTrue($item->exists());
+
+		$filters->filter($item);
+
+		$this->assertTrue($item->exists());
+
+		$filters->filter($item, 'bar');
+
+		$this->assertFalse($item->exists());
 	}
 }
