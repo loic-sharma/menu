@@ -145,7 +145,7 @@ class Item extends Element {
 	 */
 	public function exists()
 	{
-		return $this->hasBeenRemoved;
+		return ! $this->hasBeenRemoved;
 	}
 
 	/**
