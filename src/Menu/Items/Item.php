@@ -95,32 +95,6 @@ class Item extends Element {
 	}
 
 	/**
-	 * Set new attributes.
-	 *
-	 * @param  array  $attributes
-	 * @return void
-	 */
-	public function setAttributes(array $attributes)
-	{
-		foreach($attributes as $offset => $value)
-		{
-			var_dump($offset, $value);
-			$this->offsetSet($offset, $value);
-		}
-	}
-
-	/**
-	 * Get all of the attributes for an element of the item.
-	 *
-	 * @param  string  $element
-	 * @return array
-	 */
-	public function getAttributes($element = 'li')
-	{
-		return $this->attributes[$element];
-	}
-
-	/**
 	 * Verify that the current item exists.
 	 *
 	 * @return bool
