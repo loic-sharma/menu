@@ -17,8 +17,8 @@ class FilterTest extends PHPUnit_Framework_TestCase {
 	public function testFilterItems()
 	{
 		$filters = new Menu\FilterRepository;
-		$renderer = new Menu\Renderer;
-		$item = new Menu\Items\Item('foo', $filters, $renderer);
+
+		$item = new Menu\Items\Item($filters, new Menu\Renderer);
 
 		$filters->addFilter(function($item) {});
 

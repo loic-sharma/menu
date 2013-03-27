@@ -1,8 +1,8 @@
 <?php namespace Menu\Items;
 
 use Closure;
-use Menu\FilterRepository as MenuFilters;
-use Menu\Renderer as MenuRenderer;
+use Menu\FilterRepository;
+use Menu\Renderer;
 
 class Item extends Element {
 
@@ -33,13 +33,6 @@ class Item extends Element {
 	 * @var Menu\Item
 	 */
 	public $parent;
-
-	/**
-	 * The name of the menu the item belongs to.
-	 *
-	 * @var string
-	 */
-	public $menuName;
 
 	/**
 	 * The URL of the item.
@@ -79,15 +72,12 @@ class Item extends Element {
 	/**
 	 * Prepare the new item.
 	 *
-	 * @param  string                 $menuName
 	 * @param  Menu\FilterRepository  $filters
 	 * @param  Menu\Renderer          $renderer
 	 * @return void
 	 */
-	public function __construct($menuName, MenuFilters $filters, MenuRenderer $renderer)
 	public function __construct(FilterRepository $filters, Renderer $renderer)
 	{
-		$this->menuName = $menuName;
 		$this->filters = $filters;
 		$this->renderer = $renderer;
 	}
@@ -170,7 +160,7 @@ class Item extends Element {
 	 */
 	public function add($name, $attributes = null, $subItems = null)
 	{
-		$item = new Item($this->menuName, $this->filters, $this->renderer);
+		$item = new Item($this->filters, $this->renderer);
 
 		$item->name = $name;
 

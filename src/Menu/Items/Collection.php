@@ -10,9 +10,9 @@ class Collection extends Item {
 	 *
 	 * @return void
 	 */
-	public function __construct($menuName, Filters $filters, Renderer $renderer)
+	public function __construct(Filters $filters, Renderer $renderer)
 	{
-		parent::__construct($menuName, $filters, $renderer);
+		parent::__construct($filters, $renderer);
 
 		// All of the collection's items will use the instance of this
 		// class as its menu.
@@ -27,6 +27,6 @@ class Collection extends Item {
 	 */
 	public function filter($filter)
 	{
-		$this->filters->addFilter($filter, $this->menuName);
+		$this->filters->addFilter($filter, $this->menu->Name);
 	}
 }

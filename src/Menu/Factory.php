@@ -66,7 +66,9 @@ class Factory {
 	{
 		if( ! isset($this->menus[$name]))
 		{
-			$this->menus[$name] = new Collection($name, $this->filters, $this->renderer);
+			$this->menus[$name] = new Collection($this->filters, $this->renderer);
+
+			$this->menus[$name]->name = $name;
 		}
 
 		return $this->menus[$name];

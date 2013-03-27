@@ -65,6 +65,6 @@ class ItemTest extends PHPUnit_Framework_TestCase {
 		$filters = new Menu\FilterRepository;
 		$renderer = new Menu\Renderer;
 
-		return new Menu\Items\Item('menu', $filters, $renderer);
+		return new Menu\Items\Item($filters, $renderer);
 	}
 }
