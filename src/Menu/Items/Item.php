@@ -104,6 +104,7 @@ class Item extends Element {
 	{
 		foreach($attributes as $offset => $value)
 		{
+			var_dump($offset, $value);
 			$this->offsetSet($offset, $value);
 		}
 	}
@@ -165,17 +166,17 @@ class Item extends Element {
 		{
 			if(is_string($attributes))
 			{
-				$attributes = array('url' => $attributes);
-			}
-
-			if(is_array($attributes))
-			{
-				$item->setAttributes($attributes);
+				$this->url = $attributes;
 			}
 
 			elseif($attributes instanceof Closure)
 			{
 				$attributes($item);
+			}
+
+			else
+			{
+				throw new \InvalidArgumentException;
 			}
 		}
 
