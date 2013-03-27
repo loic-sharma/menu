@@ -121,7 +121,7 @@ class Renderer {
 
 		if( ! empty($items))
 		{
-			$output = $this->format('<ul'.$this->attributes($list['ul']).'>', $depth);
+			$output = $this->format('<ul'.$this->attributes($list->element('ul')).'>', $depth);
 
 			$itemCount = count($items);
 
