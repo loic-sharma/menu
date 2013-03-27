@@ -1,9 +1,5 @@
 <?php namespace Menu;
 
-use Menu\Factory as MenuFactory;
-use Menu\FilterRepository as MenuFilter;
-use Menu\Renderer as MenuRenderer;
-
 use Illuminate\Support\ServiceProvider;
 
 class MenuServiceProvider extends ServiceProvider {
@@ -31,7 +27,7 @@ class MenuServiceProvider extends ServiceProvider {
 	{
 		$this->app['menu.filter'] = $this->app->share(function($app)
 		{
-			return new MenuFilter;
+			return new FilterRepository;
 		});
 	}
 
@@ -44,7 +40,7 @@ class MenuServiceProvider extends ServiceProvider {
 	{
 		$this->app['menu.renderer'] = $this->app->share(function($app)
 		{
-			return new MenuRenderer;
+			return new Renderer;
 		});
 	}
 
@@ -57,7 +53,7 @@ class MenuServiceProvider extends ServiceProvider {
 	{
 		$this->app['menu'] = $this->app->share(function($app)
 		{
-			return new MenuFactory($app['menu.filter'], $app['menu.renderer']);
+			return new Factory($app['menu.filter'], $app['menu.renderer']);
 		});
 	}
 }

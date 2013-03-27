@@ -9,7 +9,7 @@ Create an HTML menu easily!
 ```php
 <?php
 
-$factory = new Menu\Factory(new Menu\FilterRepository, new Menu\Renderer);
+$factory = new Menu\Factory;
 
 $menu = $factory->get('header');
 

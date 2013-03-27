@@ -33,10 +33,27 @@ class Factory {
 	 * @param  Menu\Renderer          $renderer
 	 * @return void
 	 */
-	public function __construct(FilterRepository $filters, Renderer $renderer)
+	public function __construct(FilterRepository $filters = null, Renderer $renderer = null)
 	{
-		$this->filters = $filters;
-		$this->renderer = $renderer;
+		if(is_null($filters))
+		{
+			$this->filters = new FilterRepository;
+		}
+
+		else
+		{
+			$this->filters = $filters;
+		}
+
+		if(is_null($renderer))
+		{
+			$this->renderer = new Renderer;
+		}
+
+		else
+		{
+			$this->renderer = $renderer;
+		}
 	}
 
 	/**
