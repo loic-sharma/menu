@@ -140,7 +140,7 @@ class Item extends Element {
 		{
 			if(is_string($attributes))
 			{
-				$this->url = $attributes;
+				$item->url = $attributes;
 			}
 
 			elseif($attributes instanceof Closure)
