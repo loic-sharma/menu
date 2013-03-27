@@ -2,7 +2,6 @@
 
 use Closure;
 use Menu\FilterRepository;
-use Menu\Renderer;
 
 class Item extends Element {
 
@@ -49,13 +48,6 @@ class Item extends Element {
 	protected $filters;
 
 	/**
-	 * The instance of the Renderer.
-	 *
-	 * @var Menu\Renderer
-	 */
-	protected $renderer;
-
-	/**
 	 * The item's elements.
 	 *
 	 * @var array
@@ -73,13 +65,11 @@ class Item extends Element {
 	 * Prepare the new item.
 	 *
 	 * @param  Menu\FilterRepository  $filters
-	 * @param  Menu\Renderer          $renderer
 	 * @return void
 	 */
-	public function __construct(FilterRepository $filters, Renderer $renderer)
+	public function __construct(FilterRepository $filters)
 	{
 		$this->filters = $filters;
-		$this->renderer = $renderer;
 	}
 
 	/**
@@ -160,7 +150,7 @@ class Item extends Element {
 	 */
 	public function add($name, $attributes = null, $subItems = null)
 	{
-		$item = new Item($this->filters, $this->renderer);
+		$item = new Item($this->filters);
 
 		$item->name = $name;
 
@@ -312,25 +302,5 @@ class Item extends Element {
 		}
 
 		return $element->attribute($attribute);
-	}
-
-	/**
-	 * Render the current menu.
-	 *
-	 * @return string
-	 */
-	public function render()
-	{
-		return $this->renderer->renderMenu($this);
-	}
-
-	/**
-	 * Render the current item.
-	 *
-	 * @return string
-	 */
-	public function __toString()
-	{
-		return $this->render();
 	}
 }

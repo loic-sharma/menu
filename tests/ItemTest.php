@@ -63,8 +63,7 @@ class ItemTest extends PHPUnit_Framework_TestCase {
 	protected function getItem()
 	{
 		$filters = new Menu\FilterRepository;
-		$renderer = new Menu\Renderer;
 
-		return new Menu\Items\Item($filters, $renderer);
+		return new Menu\Items\Item($filters);
 	}
 }
