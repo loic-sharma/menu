@@ -48,7 +48,7 @@ class Collection extends Item {
 	 */
 	public function filter($filter)
 	{
-		$this->filters->addFilter($filter, $this->menu->Name);
+		$this->filters->addFilter($filter, $this->menu->name);
 	}
 
 	/**
