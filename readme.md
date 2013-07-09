@@ -67,7 +67,7 @@ $factory->addFilter(function($item)
 $menu->addFilter(function($item)
 {
 	// Modify the li elements.
-	$item['li.class'] = 'prettify';
+	$item->label->class = 'prettify';
 });
 
 ```
