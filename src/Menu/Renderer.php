@@ -125,11 +125,11 @@ class Renderer {
 
 			$itemCount = count($items);
 
-			foreach($items as $key => $item)
+			foreach($items as $item)
 			{
 				if($itemCount == 1)
 				{
-					$item->attribute('li.class', $this->options['class.single']);
+					$item->element('li')->append('class', $this->options['class.single']);
 				}
 
 				$output .= $this->renderItem($item, $depth+1);
