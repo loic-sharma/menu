@@ -1,6 +1,8 @@
 <?php namespace Menu\Items;
 
-class Element {
+use ArrayAccess;
+
+class Element implements ArrayAccess {
 
 	/**
 	 * The element's attributes.
@@ -22,7 +24,7 @@ class Element {
 	/**
 	 * Verify if the element has an attribute.
 	 *
-	 * @param  string  $name
+	 * @param  string  $attribute
 	 * @return bool
 	 */
 	public function has($attribute)
@@ -33,7 +35,7 @@ class Element {
 	/**
 	 * Fetch an element's attribute.
 	 *
-	 * @param  string  $name
+	 * @param  string  $attribute
 	 * @param  string  $value
 	 * @return string
 	 */
@@ -50,7 +52,7 @@ class Element {
 	/**
 	 * Append to the value of an element's attribute.
 	 *
-	 * @param  string  $name
+	 * @param  string  $attribute
 	 * @param  string  $value
 	 * @return void
 	 */
@@ -68,9 +70,9 @@ class Element {
 	}
 
 	/**
-	 * Remove an element's attributes.
+	 * Remove an element's attribute.
 	 *
-	 * @param  string  $name
+	 * @param  string  $attribute
 	 * @return void
 	 */
 	public function remove($attribute)
@@ -99,5 +101,50 @@ class Element {
 	public function __set($key, $value)
 	{
 		$this->attribute($key, $value);
+	}
+
+	/**
+	 * Check that an attribute exists.
+	 *
+	 * @param  string  $offset
+	 * @return bool
+	 */
+	public function offsetExists($offset)
+	{
+		return $this->has($offset);
+	}
+
+	/**
+	 * Get an attribute.
+	 *
+	 * @param  string  $offset
+	 * @return string
+	 */
+	public function offsetGet($offset)
+	{
+		return $this->attribute($offset);
+	}
+
+	/**
+	 * Set an attribute.
+	 *
+	 * @param  string  $offset
+	 * @param  string  $value
+	 * @return void
+	 */
+	public function offsetSet($offset, $value)
+	{
+		return $this->attribute($offset, $value);
+	}
+
+	/**
+	 * Remove an element's attribute.
+	 *
+	 * @param  string  $offset
+	 * @return void
+	 */
+	public function offsetUnset($offset)
+	{
+		$this->remove($offset);
 	}
 }

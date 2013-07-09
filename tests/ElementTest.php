@@ -9,9 +9,13 @@ class ElementTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($element->has('foo'));
 
 		$element->attribute('foo', 'bar');
+		$element['fooz'] = 'baz';
 
 		$this->assertEquals('bar', $element->attribute('foo'));
 		$this->assertTrue($element->has('foo'));
+
+		$this->assertEquals('baz', $element['fooz']);
+		$this->assertTrue(isset($element['fooz']));
 	}
 
 	public function testMagicMethods()
@@ -44,6 +48,14 @@ class ElementTest extends PHPUnit_Framework_TestCase {
 
 		$element->remove('foo');
 		$this->assertFalse($element->has('foo'));
+
+		$element['foo'] = 'bar';
+
+		$this->assertEquals('bar', $element['foo']);
+		$this->assertTrue(isset($element['foo']));
+
+		unset($element['foo']);
+		$this->assertFalse(isset($element['foo']));
 	}
 
 	public function testGetElementAttributes()
@@ -54,7 +66,7 @@ class ElementTest extends PHPUnit_Framework_TestCase {
 
 		$element->attribute('foo', 'bar');
 		$element->attribute('fooz', 'baz');
-		$element->attribute('bob', 'marley');
+		$element['bob'] = 'marley';
 		$element->remove('fooz');
 
 		$this->assertEquals($expected, $element->attributes());
