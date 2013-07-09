@@ -1,6 +1,8 @@
 <?php namespace menu;
 
+use Menu\Items\Collection;
 use Menu\Items\Element;
+use Menu\Items\Item;
 
 class Renderer {
 
@@ -18,17 +20,17 @@ class Renderer {
 	/**
 	 * Convert a menu item into HTML.
 	 *
-	 * @param  mixed  $item
+	 * @param  Menu\Items\Item  $item
 	 * @return string
 	 */
-	public function render($item)
+	public function render(Item $item)
 	{
-		if($item instanceof Menu\Items\Collection)
+		if($item instanceof Collection)
 		{
 			$this->renderMenu($item);
 		}
 
-		if($item instanceof Menu\Items\Item)
+		if($item instanceof Item)
 		{
 			$this->renderItem($item);
 		}
@@ -40,7 +42,7 @@ class Renderer {
 	 * @param  Menu\Items\Collection  $menu
 	 * @return string
 	 */
-	public function renderMenu($menu)
+	public function renderMenu(Collection $menu)
 	{
 		$output = '';
 
@@ -79,7 +81,7 @@ class Renderer {
 	 * @param  int              $depth
 	 * @return string
 	 */
-	public function renderItem($item, $depth = 1)
+	public function renderItem(Item $item, $depth = 1)
 	{
 		$output = $this->format('<li'.$this->attributes($item->element('li')).'>', $depth);
 
@@ -113,7 +115,7 @@ class Renderer {
 	 * @param  int              $depth
 	 * @return string
 	 */
-	public function renderList($list, $depth = 1)
+	public function renderList(Item $list, $depth = 1)
 	{
 		$output = '';
 
