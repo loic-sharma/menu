@@ -54,18 +54,12 @@ class Renderer {
 		{
 			if($key == 0)
 			{
-				$item->element('li', function($element) use($options)
-				{
-					$element->append('class', $options['class.first']);
-				});
+				$item->element('li')->append('class', $options['class.first']);
 			}
 
 			elseif($key == $last)
 			{
-				$item->element('li', function($element) use($options)
-				{
-					$element->append('class', $options['class.last']);
-				});
+				$item->element('li')->append('class', $options['class.last']);
 			}
 
 			$output .= $this->renderItem($item, 1);
