@@ -40,6 +40,10 @@ $menu->add('Name', function($item)
 	$item->attribute('a.class', 'another-class');
 
 	// Or:
+	$item['li.id'] = 'name-id';
+	$item['li.class'] = 'name-class';
+
+	// Or:
 	$item->element('li')->attribute('id', 'name-id');
 	$item->element('li')->attribute('class', 'name-class');
 
@@ -74,7 +78,7 @@ $factory->addFilter(function($item)
 $menu->addFilter(function($item)
 {
 	// Modify the li elements.
-	$item->attribute('li.class', 'prettify');
+	$item['li.class'] = 'prettify';
 });
 
 ```
