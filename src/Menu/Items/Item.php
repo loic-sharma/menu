@@ -41,6 +41,17 @@ class Item extends Element {
 	public $url;
 
 	/**
+	 * The aliases for the item elements.
+	 *
+	 * @var array
+	 */
+	protected $elementAliases = array(
+		'li'   => 'label',
+		'a'    => 'link',
+		'ul'   => 'list',
+	);
+
+	/**
 	 * The item's elements.
 	 *
 	 * @var array
@@ -233,6 +244,8 @@ class Item extends Element {
 	 */
 	public function element($name, Closure $closure = null)
 	{
+		$name = $this->elementName($name);
+
 		if( ! isset($this->elements[$name]))
 		{
 			$this->elements[$name] = new Element;
@@ -245,6 +258,25 @@ class Item extends Element {
 		}
 
 		return $this->elements[$name];
+	}
+
+	/**
+	 * Get the element's real name.
+	 *
+	 * @param  string  $alias
+	 * @return string
+	 */
+	protected function elementName($alias)
+	{
+		// Look through the aliases. If the element is aliased, get
+		// the real element's name.
+		if(($element = array_search($alias, $this->elementAliases)))
+		{
+			return $element;
+		}
+
+		// The element does not have an alias.
+		return $alias;
 	}
 
 	/**
@@ -266,5 +298,16 @@ class Item extends Element {
 		}
 
 		return $element->attribute($attribute);
+	}
+
+	/**
+	 * Fetch an item's element.
+	 *
+	 * @param  string  $name
+	 * @return Menu\Items\Element
+	 */
+	public function __get($name)
+	{
+		return $this->element($name);
 	}
 }

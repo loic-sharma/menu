@@ -26,26 +26,32 @@ echo $menu;
 
 ```
 
-### Adding Attributes to an Item
+### Adding Attributes to Menus
 
 ```php
 <?php
 
-$menu->add('Name', function($item)
+$menu->add('Link', function($item)
 {
 	$item->url = '/uri';
 
-	$item->attribute('li.id', 'name-id');
-	$item->attribute('li.class', 'name-class');
-	$item->attribute('a.class', 'another-class');
+	$item->link->id = 'a-id';
+	$item->link->class = 'a-class';
+
+	$item->label->id = 'li-id';
+	$item->label->class = 'li-class';
+
+	$item->list->id = 'ul-id';
+	$item->list->class = 'ul-class';
 
 	// Or:
-	$item['li.id'] = 'name-id';
-	$item['li.class'] = 'name-class';
+	$item->element('list')->attribute('id', 'ul-id');
 
 	// Or:
-	$item->element('li')->attribute('id', 'name-id');
-	$item->element('li')->attribute('class', 'name-class');
+	$item->attribute('list.id', 'ul-id');
+
+	// Or;
+	$item['list.id'] = 'ul-id';
 
 	// Or:
 	$item->element('li', function($element)
@@ -54,7 +60,6 @@ $menu->add('Name', function($item)
 		$element->class = 'name-class';
 	});
 });
-
 ```
 
 ### Filtering Menu Items

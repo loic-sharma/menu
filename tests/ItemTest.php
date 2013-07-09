@@ -7,6 +7,7 @@ class ItemTest extends PHPUnit_Framework_TestCase {
 		$item = $this->getItem();
 
 		$this->assertInstanceOf('Menu\Items\Element', $item->element('foo'));
+		$this->assertInstanceOf('Menu\Items\Element', $item->bar);	
 	}
 
 	public function testSetElementAttributesThroughClosure()

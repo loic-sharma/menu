@@ -37,7 +37,7 @@ class Element implements ArrayAccess {
 	 *
 	 * @param  string  $attribute
 	 * @param  string  $value
-	 * @return string
+	 * @return string|null
 	 */
 	public function attribute($attribute, $value = null)
 	{
@@ -46,7 +46,12 @@ class Element implements ArrayAccess {
 			$this->attributes[$attribute] = $value;
 		}
 
-		return $this->attributes[$attribute];
+		if($this->has($attribute))
+		{
+			return $this->attributes[$attribute];
+		}
+
+		return null;
 	}
 
 	/**

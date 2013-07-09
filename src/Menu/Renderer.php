@@ -60,26 +60,29 @@ class Renderer {
 	 * @return string
 	 */
 	public function renderMenu(Collection $menu)
-	{
+	{	
 		$output = '';
 
 		$items = $menu->items();
 
-		$last = count($items) - 1;
+		$key = 0;
+		$lastKey = count($items) - 1;
 
-		foreach($items as $key => $item)
+		foreach($items as $item)
 		{
 			if($key == 0)
 			{
-				$item->element('li')->append('class', $this->firstClass);
+				$this->addClass($item->label, $this->firstClass);
 			}
 
-			elseif($key == $last)
+			elseif($key == $lastKey)
 			{
-				$item->element('li')->append('class', $this->lastClass);
+				$this->addClass($item->label, $this->lastClass);
 			}
 
-			$output .= $this->renderItem($item, 1);
+			$output .= $this->renderItem($item);
+
+			$key++;
 		}
 
 		return $output;
@@ -94,18 +97,18 @@ class Renderer {
 	 */
 	public function renderItem(Item $item, $depth = 1)
 	{
-		$output = $this->format('<li'.$this->attributes($item->element('li')).'>', $depth);
+		$output = $this->format('<li'.$this->attributes($item->label).'>', $depth);
 
 		if( ! empty($item->url))
 		{
-			$item['a.href'] = $item->url;
+			$item->link->href = $item->url;
 		}
 
 		// If the anchor attribute exists, wrap the label around with it. Otherwise,
 		// wrap the label with a span element.
-		if(count($item->element('a')->attributes()) != 0)
+		if(count($item->link->attributes()) != 0)
 		{
-			$label = '<a'.$this->attributes($item->element('a')).'>'.$item->name.'</a>';
+			$label = '<a'.$this->attributes($item->link).'>'.$item->name.'</a>';
 		}
 
 		else
@@ -135,15 +138,16 @@ class Renderer {
 
 		if( ! empty($items))
 		{
-			$output = $this->format('<ul'.$this->attributes($list->element('ul')).'>', $depth);
+			$output = $this->format('<ul'.$this->attributes($list->ul).'>', $depth);
 
 			$itemCount = count($items);
 
 			foreach($items as $item)
 			{
+				// If this is the only item of its level, give it the single item class.
 				if($itemCount == 1)
 				{
-					$item->element('li')->append('class', $this->singleClass);
+					$this->addClass($item->label, $this->singleClass);
 				}
 
 				$output .= $this->renderItem($item, $depth+1);
@@ -153,6 +157,27 @@ class Renderer {
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Add a class to an element.
+	 *
+	 * @param  Menu\Items\Element $element
+	 * @param  string  $class
+	 * @return void
+	 */
+	protected function addClass($element, $class)
+	{
+		// Don't do anything if the class is null.
+		if( ! is_null($class))
+		{
+			// Make sure that the element does not already have the class
+			// before appending the class to the element.
+			if(strpos($element->class, ' '.$class.' ') === false)
+			{
+				$element->append('class', $class);
+			}
+		}
 	}
 
 	/**
