@@ -120,15 +120,14 @@ class Item extends Element {
 	 *
 	 * @param  string          $name
 	 * @param  string|Closure  $attributes
-	 * @param  Closure         $subItems
+	 * @param  Closure         $callback
 	 * @return void
 	 */
-	public function add($name, $attributes = null, $subItems = null)
+	public function add($name, $attributes = null, $callback = null)
 	{
 		$item = new Item($this->filters);
 
-		$item->name = $name;
-
+		// Set the new item's parents.
 		if( ! is_null($this->menu))
 		{
 			$item->setMenu($this->menu);
@@ -136,13 +135,18 @@ class Item extends Element {
 
 		$item->setParent($this);
 
+		// Set the new item's attributes.
+		$item->name = $name;
+
 		if( ! is_null($attributes))
 		{
+			// If the attributes is just a string, then it is the  URL
+			// for the menu item.
 			if(is_string($attributes))
 			{
 				$item->url = $attributes;
 			}
-
+ 
 			elseif($attributes instanceof Closure)
 			{
 				$attributes($item);
@@ -154,9 +158,9 @@ class Item extends Element {
 			}
 		}
 
-		if($subItems instanceof Closure)
+		if($callback instanceof Closure)
 		{
-			$subItems($item);
+			$callback($item);
 		}
 
 		$this->items[$name] = $item;
@@ -194,8 +198,8 @@ class Item extends Element {
 	/**
 	 * Fetch a specific item.
 	 *
-	 * @param  string|Closure  $item
-	 * @return Menu\Item
+	 * @param  string|Closure   $item
+	 * @return Menu\Items\Item
 	 */
 	public function get($filter)
 	{
