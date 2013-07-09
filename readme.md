@@ -43,22 +43,6 @@ $menu->add('Link', function($item)
 
 	$item->list->id = 'ul-id';
 	$item->list->class = 'ul-class';
-
-	// Or:
-	$item->element('list')->attribute('id', 'ul-id');
-
-	// Or:
-	$item->attribute('list.id', 'ul-id');
-
-	// Or;
-	$item['list.id'] = 'ul-id';
-
-	// Or:
-	$item->element('li', function($element)
-	{
-		$element->id = 'name-id';
-		$element->class = 'name-class';
-	});
 });
 ```
 
