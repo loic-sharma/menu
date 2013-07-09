@@ -6,6 +6,13 @@ use Menu\FilterRepository as Filters;
 class Collection extends Item {
 
 	/**
+	 * The instance of the Filter Repository.
+	 *
+	 * @var Menu\FilterRepository
+	 */
+	protected $filters;
+
+	/**
 	 * The renderer that will be used to translate menu objects
 	 * into HTML.
 	 *
@@ -20,13 +27,22 @@ class Collection extends Item {
 	 */
 	public function __construct(Filters $filters, Renderer $renderer)
 	{
-		parent::__construct($filters);
-
+		$this->setFilters($filters);
 		$this->setRenderer($renderer);
 
-		// All of the collection's items will use the instance of this
-		// class as its menu.
+		// All of the collection's items will use this instance as their menu.
 		$this->setMenu($this);
+	}
+
+	/**
+	 * Set the filters that will be used to filter the menu's items.
+	 *
+	 * @param  Menu\FilterRepository  $filters
+	 * @return void
+	 */
+	public function setFilters(Filters $filters)
+	{
+		$this->filters = $filters;
 	}
 
 	/**
@@ -46,9 +62,20 @@ class Collection extends Item {
 	 * @param  Closure $filter
 	 * @return void
 	 */
-	public function filter($filter)
+	public function addFilter($filter)
 	{
 		$this->filters->addFilter($filter, $this->menu->name);
+	}
+
+	/**
+	 * Run a menu item through a filter.
+	 *
+	 * @param  Menu\Items\Item  $item
+	 * @return void
+	 */
+	public function filter(Item $item)
+	{
+		$this->filters->filter($item);
 	}
 
 	/**

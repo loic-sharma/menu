@@ -23,6 +23,6 @@ class MenuFactoryTest extends PHPUnit_Framework_TestCase {
 		$renderer = new Menu\Renderer;
 		$factory  = new Menu\Factory($filters, $renderer);
 
-		$factory->filter($expected);
+		$factory->addFilter($expected);
 	}
 }

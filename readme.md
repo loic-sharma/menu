@@ -44,7 +44,6 @@ $menu->add('Name', function($item)
 	$item->element('li')->attribute('class', 'name-class');
 
 	// Or:
-
 	$item->element('li', function($element)
 	{
 		$element->id = 'name-id';
@@ -62,7 +61,7 @@ Filters can be used to either remove an item from a menu, or to add more attribu
 <?php
 
 // Filter all the menus.
-$factory->filter(function($item)
+$factory->addFilter(function($item)
 {
 	// Remove any items that have the name 'Admin'
 	if($item->name == 'Admin')
@@ -72,7 +71,7 @@ $factory->filter(function($item)
 });
 
 // Filter a specific menu.
-$menu->filter(function($item)
+$menu->addFilter(function($item)
 {
 	// Modify the li elements.
 	$item->attribute('li.class', 'prettify');

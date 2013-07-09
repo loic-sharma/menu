@@ -80,7 +80,7 @@ class Factory {
 	 * @param  Closure  $filter
 	 * @return void
 	 */
-	public function filter($filter)
+	public function addFilter($filter)
 	{
 		$this->filters->addFilter($filter);
 	}

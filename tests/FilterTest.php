@@ -31,11 +31,9 @@ class FilterTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($item->exists());
 
 		$filters->filter($item);
-
 		$this->assertTrue($item->exists());
 
 		$filters->filter($item, 'bar');
-
 		$this->assertFalse($item->exists());
 	}
 }

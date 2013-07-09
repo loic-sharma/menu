@@ -22,14 +22,14 @@ class Item extends Element {
 	/**
 	 * The current item's menu.
 	 *
-	 * @var Menu\Item
+	 * @var Menu\Items\Collection
 	 */
 	public $menu;
 
 	/**
 	 * The current item's parent.
 	 *
-	 * @var Menu\Item
+	 * @var Menu\Items\Item
 	 */
 	public $parent;
 
@@ -39,13 +39,6 @@ class Item extends Element {
 	 * @var string
 	 */
 	public $url;
-
-	/**
-	 * The instance of the Filter Repository.
-	 *
-	 * @var Menu\FilterRepository
-	 */
-	protected $filters;
 
 	/**
 	 * The item's elements.
@@ -60,17 +53,6 @@ class Item extends Element {
 	 * @var array
 	 */
 	protected $items = array();
-
-	/**
-	 * Prepare the new item.
-	 *
-	 * @param  Menu\FilterRepository  $filters
-	 * @return void
-	 */
-	public function __construct(FilterRepository $filters)
-	{
-		$this->filters = $filters;
-	}
 
 	/**
 	 * Set the current item's menu.
@@ -125,7 +107,7 @@ class Item extends Element {
 	 */
 	public function add($name, $attributes = null, $callback = null)
 	{
-		$item = new Item($this->filters);
+		$item = new Item;
 
 		// Set the new item's parents.
 		if( ! is_null($this->menu))
@@ -231,9 +213,12 @@ class Item extends Element {
 	 */
 	public function items()
 	{
-		foreach($this->items as $item)
+		if( ! is_null($this->menu))
 		{
-			$this->filters->filter($item);
+			foreach($this->items as $item)
+			{
+				$this->menu->filter($item);
+			}
 		}
 
 		return $this->items;
