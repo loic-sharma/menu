@@ -6,16 +6,33 @@ use Menu\Items\Item;
 
 class Renderer {
 
-	/**
-	 * The renderer options.
+	/** 
+	 * The class for the first menu item on its level.
 	 *
-	 * @var array
+	 * @var string
 	 */
-	public $options = array(
-		'class.first' => 'first',
-		'class.last' => 'last',
-		'class.single' => 'single',
-	);
+	public $firstClass = 'first';
+
+	/**
+	 * The class for the last menu item on its level.
+	 *
+	 * @var string
+	 */
+	public $lastClass = 'last';
+
+	/**
+	 * The class for a menu item that has no siblings on its level.
+	 *
+	 * @var string
+	 */
+	public $singleClass = 'single';
+
+	/**
+	 * The number of spaces used for each indentation.
+	 *
+	 * @var int
+	 */
+	public $spaces = 4;
 
 	/**
 	 * Convert a menu item into HTML.
@@ -54,12 +71,12 @@ class Renderer {
 		{
 			if($key == 0)
 			{
-				$item->element('li')->append('class', $this->options['class.first']);
+				$item->element('li')->append('class', $this->firstClass);
 			}
 
 			elseif($key == $last)
 			{
-				$item->element('li')->append('class', $this->options['class.last']);
+				$item->element('li')->append('class', $this->lastClass);
 			}
 
 			$output .= $this->renderItem($item, 1);
@@ -126,7 +143,7 @@ class Renderer {
 			{
 				if($itemCount == 1)
 				{
-					$item->element('li')->append('class', $this->options['class.single']);
+					$item->element('li')->append('class', $this->singleClass);
 				}
 
 				$output .= $this->renderItem($item, $depth+1);
@@ -147,7 +164,7 @@ class Renderer {
 	 */
 	protected function format($html, $depth)
 	{
-		return str_repeat(' ', $depth * 4).$html.PHP_EOL;
+		return str_repeat(' ', $depth * $this->spaces).$html.PHP_EOL;
 	}
 
 	/**
