@@ -46,20 +46,20 @@ class Renderer {
 	{
 		$output = '';
 
-		$options = $this->options;
 		$items = $menu->items();
-		$last = count($items)-1;
+
+		$last = count($items) - 1;
 
 		foreach($items as $key => $item)
 		{
 			if($key == 0)
 			{
-				$item->element('li')->append('class', $options['class.first']);
+				$item->element('li')->append('class', $this->options['class.first']);
 			}
 
 			elseif($key == $last)
 			{
-				$item->element('li')->append('class', $options['class.last']);
+				$item->element('li')->append('class', $this->options['class.last']);
 			}
 
 			$output .= $this->renderItem($item, 1);
@@ -81,21 +81,22 @@ class Renderer {
 
 		if( ! empty($item->url))
 		{
-			$item->element('a')->attribute('href', $item->url);
+			$item['a.href'] = $item->url;
 		}
 
+		// If the anchor attribute exists, wrap the label around with it. Otherwise,
+		// wrap the label with a span element.
 		if(count($item->element('a')->attributes()) != 0)
 		{
-			$link = '<a'.$this->attributes($item->element('a')).'>'.$item->name.'</a>';
-
-			$output .= $this->format($link, $depth+1);
+			$label = '<a'.$this->attributes($item->element('a')).'>'.$item->name.'</a>';
 		}
 
 		else
 		{
-			$output .= $this->format($item->name, $depth+1);
+			$label = '<span>'.$item->name.'</span>';
 		}
 
+		$output .= $this->format($label, $depth+1);
 		$output .= $this->renderList($item, $depth+1);
 		$output .= $this->format('</li>', $depth);
 
