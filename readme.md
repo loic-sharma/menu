@@ -31,18 +31,23 @@ echo $menu;
 ```php
 <?php
 
-$menu->add('Link', function($item)
+$menu->add('First Link', '/', function($item)
 {
-	$item->url = '/uri';
-
 	$item->link->id = 'a-id';
 	$item->link->class = 'a-class';
 
 	$item->label->id = 'li-id';
 	$item->label->class = 'li-class';
+});
+
+$menu->add('Second Link', function($item)
+{
+	$item->url = '/uri';
 
 	$item->list->id = 'ul-id';
 	$item->list->class = 'ul-class';
+
+	$menu->add('Sub Link', '/sub/link');
 });
 ```
 
